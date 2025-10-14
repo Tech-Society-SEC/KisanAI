@@ -1,0 +1,29 @@
+## 📅 Week 01
+
+### 🗓 Day 01 (2025-10-14)
+
+## Key Accomplishments:
+
+```
+- Defined the main problem statement and core objectives for **Kisan+ - Your Farming Assistant**.
+- Designed initial **user-friendly mobile app interface** (voice-first).
+- Gathered and reviewed relevant datasets for **crop diagnosis ML model**.
+- Coordinated with backend team for API strategy and data flow.
+```
+
+## Goals for Next Day:
+```
+- Preprocess and analyze the crop image dataset for ML training.
+- Start implementing the basic **crop disease diagnosis ML model** (image classification).
+- Collaborate with backend team on data formats for model integration.
+- Prepare documentation for frontend-backend-ML interaction.
+```
+
+#### 👥 **Team Contributions**
+
+```
+* **[A.Nabithra]:** ML dataset research and design plan for crop diagnosis model
+* **[Ramitha Chowdhary]:** Initial backend API setup and route planning
+```
+
+https://preview--kisan-mishra-34242-65987-78024-55385-52747.lovable.app/dashboard
