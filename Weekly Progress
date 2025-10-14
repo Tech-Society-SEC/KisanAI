@@ -6,9 +6,9 @@
 
 ```
 - Defined the main problem statement and core objectives for **Kisan+ - Your Farming Assistant**.
-- Designed initial **user-friendly mobile app interface** (voice-first).
+- Designed initial **user-friendly interface** (voice-first).
 - Gathered and reviewed relevant datasets for **crop diagnosis ML model**.
-- Coordinated with backend team for API strategy and data flow.
+- Defined Backened Structure,UI flow,core MVP features.
 ```
 
 ## Goals for Next Day:
@@ -23,7 +23,7 @@
 
 ```
 * **[A.Nabithra]:** ML dataset research and design plan for crop diagnosis model
-* **[Ramitha Chowdhary]:** Initial backend API setup and route planning
+* **[Ramitha Chowdhary]:** Set up FastAPI backend and PostgreSQL database, created endpoints.
 ```
 
 https://preview--kisan-mishra-34242-65987-78024-55385-52747.lovable.app/dashboard
