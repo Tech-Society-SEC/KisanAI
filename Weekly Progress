@@ -1,16 +1,12 @@
 ## 📅 Week 01
-
 ### 🗓 Day 01 (2025-10-14)
-
 ## Key Accomplishments:
-
 ```
 - Defined the main problem statement and core objectives for **Kisan+ - Your Farming Assistant**.
 - Designed initial **user-friendly interface** (voice-first).
 - Gathered and reviewed relevant datasets for **crop diagnosis ML model**.
 - Defined Backened Structure,UI flow,core MVP features.
 ```
-
 ## Goals for Next Day:
 ```
 - Preprocess and analyze the crop image dataset for ML training.
@@ -18,12 +14,29 @@
 - Collaborate with backend team on data formats for model integration.
 - Prepare documentation for frontend-backend-ML interaction.
 ```
-
 #### 👥 **Team Contributions**
-
 ```
 * **[A.Nabithra]:** ML dataset research and design plan for crop diagnosis model
-* **[Ramitha Chowdhary]:** Set up FastAPI backend and PostgreSQL database, created endpoints.
+* **[Ramitha Chowdhary]:** Set up FastAPI backend structure and PostgreSQL database.
+```
+### 🗓 Day 02 (2025-10-15)
+## Key Accomplishments:
+```
+- Began initial setup for the **Kisan+** project implementation phase.  
+- Installed and configured essential **libraries and dependencies** for backend and ML modules.  
+- Organized the project structure with proper **directory setup** for scalability and maintenance.  
+- Downloaded and prepared **sample datasets** from Kaggle for preliminary ML testing.  
+- Established foundation for model integration and API structure in upcoming sessions.
+```
+## Goals for Next Day:
+```
+- Create proper **API endpoints** for user operations and database handling.  
+- Start building and testing the **crop disease prediction ML model** using the prepared datasets.
+```
+#### 👥 **Team Contributions**
+```
+* **[Ramitha Chowdhary]:** Installed all required libraries through VS Code, finalized tech stack (FastAPI, PostgreSQL, TensorFlow), and organized project structure.  
+* **[A. Nabithra]:** Collected relevant sample datasets from Kaggle and prepared data directories for ML model input.  
 ```
 
-https://preview--kisan-mishra-34242-65987-78024-55385-52747.lovable.app/dashboard
+
