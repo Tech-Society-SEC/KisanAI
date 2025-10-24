@@ -1,10 +1,10 @@
-from app.routes.diagnosis_routes import router as diagnosis_router
-from app.routes.user_routes import router as user_router
-from app.routes.login_routes import router as login_router
+from routes.diagnosis_routes import router as diagnosis_router
+from routes.user_routes import router as user_router
+from routes.login_routes import router as login_router
 
 from fastapi import FastAPI
-from app.models.database import SessionLocal, engine
-from app.models import models
+from models.database import SessionLocal, engine
+from models import models
 
 app = FastAPI()
 app.include_router(user_router)
