@@ -1,5 +1,5 @@
 ## 📅 Week 01
-### 🗓 Day 01 (2025-10-14)
+### 🗓 Day 01 (2025-10-13)
 ## Key Accomplishments:
 ```
 - Defined the main problem statement and core objectives for **Kisan+ - Your Farming Assistant**.
@@ -19,7 +19,7 @@
 * **[A.Nabithra]:** ML dataset research and design plan for crop diagnosis model
 * **[Ramitha Chowdhary]:** Set up FastAPI backend structure and PostgreSQL database.
 ```
-### 🗓 Day 02 (2025-10-15)
+### 🗓 Day 02 (2025-10-14)
 ## Key Accomplishments:
 ```
 - Began initial setup for the **Kisan+** project implementation phase.  
@@ -40,3 +40,45 @@
 ```
 
 
+## 📅 Week 02
+### 🗓 Day 01 (2025-10-20)
+## Key Accomplishments:
+```
+- Developed and tested **User Authentication Endpoints** in `user_routes.py`
+- Implemented:
+  - `POST /register` – User registration with schema validation (`user_schema.py`)
+  - `POST /login` – Credential verification and JWT token generation
+- Integrated `database.py` for user storage and session handling
+- Tested all endpoints using **Postman** / **FastAPI Docs**
+- Conducted research and documentation on **crop disease datasets** (focused on Kerala region)
+- Identified dataset features such as **leaf color**, **texture**, and **environmental factors**
+
+```
+## Goals for Next Day:
+```
+- Initialize ML model structure for crop diagnosis  
+- Create `/predict` route and connect it with the model  
+- Begin research on preprocessing and CNN architectures  
+```
+#### 👥 **Team Contributions**
+```
+* **[A.Nabithra]:**Researched and documented crop disease datasets,Listed important dataset features and sample sources  
+* **[Ramitha Chowdhary]:** Created and tested `/register` endpoint,Integrated database connection and verified API responses.
+```
+### 🗓 Day 02 (2025-10-21)
+## Key Accomplishments:
+```
+- Initialized **crop diagnosis model structure** in `diagnosis_ml.py`.  
+- Updated `main.py` and initialized **frontend structure**.
+- Trained preliminary model on sample dataset.
+```
+## Goals for Next Day:
+```
+- Develop a fully functional crop disease classifier model.
+- Build and integrate API endpoints for other features such as Help,Schemes,Market and other relevant modules.
+```
+#### 👥 **Team Contributions**
+```
+* **[Ramitha Chowdhary]:** Backend route and frontend setup.   
+* **[A. Nabithra]:**  ML model training and dataset preparation.
+```
