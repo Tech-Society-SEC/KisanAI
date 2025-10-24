@@ -82,3 +82,50 @@
 * **[Ramitha Chowdhary]:** Backend route and frontend setup.   
 * **[A. Nabithra]:**  ML model training and dataset preparation.
 ```
+Here’s a **progress journal entry for Week 03, Days 01 and 02** reflecting your major backend work and ongoing updates—styled to match previous entries and based on your commit activity:
+
+***
+
+## 📅 Week 03
+
+### 🗓 Day 01 (2025-10-20)
+#### Key Accomplishments:
+```
+- Completed major upload and integration of the backend codebase for **Kisan+ - Your Farming Assistant**.
+- Merged all backend modules—user authentication, crop diagnosis API, and database models—into the main branch.
+- Added `.gitignore` for improved repository hygiene (excluded `.env`, `venv`, logs, and cache).
+- Finished backend restructuring: optimized import patterns and reorganized project folders for clarity and scalability.
+```
+#### Goals for Next Day:
+```
+- Review and test all backend routes after major merge.
+- Update API documentation to reflect latest endpoints and integrations.
+- Collaborate with frontend and ML teams to finalize model deployment strategy.
+```
+#### 👥 Team Contributions
+```
+* **[Ramitha Chowdhary]:** Led complete backend upload, merge to main, and restructuring effort; added `.gitignore` for repo hygiene.
+* **[A. Nabithra]:** Provided feedback on backend structure, verified ML/DB integration points.
+```
+
+***
+
+### 🗓 Day 02 (2025-10-21)
+#### Key Accomplishments:
+```
+- Successfully tested backend endpoints after merge to main.
+- Verified user authentication, crop disease prediction, and DB connectivity.
+- Began updating requirements and preparing deployment setups.
+- Documented backend changes in project wiki; planned further improvements and feature rollouts.
+```
+#### Goals for Next Day:
+```
+- Update and refine backend requirements (`requirements.txt`).
+- Continue integration with ML model and frontend.
+- Start preparing production deployment pipeline (to be updated soon).
+```
+#### 👥 Team Contributions
+```
+* **[Ramitha Chowdhary]:** Orchestrated backend testing and documentation; organized requirements updates.
+* **[A. Nabithra]:** Supported verification and coordinated with ML/DB integration.
+```
