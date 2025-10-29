@@ -1,16 +1,12 @@
 ## 📅 Week 01
-
-### 🗓 Day 01 (2025-10-14)
-
+### 🗓 Day 01 (2025-10-13)
 ## Key Accomplishments:
-
 ```
 - Defined the main problem statement and core objectives for **Kisan+ - Your Farming Assistant**.
 - Designed initial **user-friendly interface** (voice-first).
 - Gathered and reviewed relevant datasets for **crop diagnosis ML model**.
 - Defined Backened Structure,UI flow,core MVP features.
 ```
-
 ## Goals for Next Day:
 ```
 - Preprocess and analyze the crop image dataset for ML training.
@@ -18,12 +14,118 @@
 - Collaborate with backend team on data formats for model integration.
 - Prepare documentation for frontend-backend-ML interaction.
 ```
-
 #### 👥 **Team Contributions**
-
 ```
 * **[A.Nabithra]:** ML dataset research and design plan for crop diagnosis model
-* **[Ramitha Chowdhary]:** Set up FastAPI backend and PostgreSQL database, created endpoints.
+* **[Ramitha Chowdhary]:** Set up FastAPI backend structure and PostgreSQL database.
+```
+### 🗓 Day 02 (2025-10-14)
+## Key Accomplishments:
+```
+- Began initial setup for the **Kisan+** project implementation phase.  
+- Installed and configured essential **libraries and dependencies** for backend and ML modules.  
+- Organized the project structure with proper **directory setup** for scalability and maintenance.  
+- Downloaded and prepared **sample datasets** from Kaggle for preliminary ML testing.  
+- Established foundation for model integration and API structure in upcoming sessions.
+```
+## Goals for Next Day:
+```
+- Create proper **API endpoints** for user operations and database handling.  
+- Start building and testing the **crop disease prediction ML model** using the prepared datasets.
+```
+#### 👥 **Team Contributions**
+```
+* **[Ramitha Chowdhary]:** Installed all required libraries through VS Code, finalized tech stack (FastAPI, PostgreSQL, TensorFlow), and organized project structure.  
+* **[A. Nabithra]:** Collected relevant sample datasets from Kaggle and prepared data directories for ML model input.  
 ```
 
-https://preview--kisan-mishra-34242-65987-78024-55385-52747.lovable.app/dashboard
+
+## 📅 Week 02
+### 🗓 Day 01 (2025-10-20)
+## Key Accomplishments:
+```
+- Developed and tested **User Authentication Endpoints** in `user_routes.py`
+- Implemented:
+  - `POST /register` – User registration with schema validation (`user_schema.py`)
+  - `POST /login` – Credential verification and JWT token generation
+- Integrated `database.py` for user storage and session handling
+- Tested all endpoints using **Postman** / **FastAPI Docs**
+- Conducted research and documentation on **crop disease datasets** (focused on Kerala region)
+- Identified dataset features such as **leaf color**, **texture**, and **environmental factors**
+
+```
+## Goals for Next Day:
+```
+- Initialize ML model structure for crop diagnosis  
+- Create `/predict` route and connect it with the model  
+- Begin research on preprocessing and CNN architectures  
+```
+#### 👥 **Team Contributions**
+```
+* **[A.Nabithra]:**Researched and documented crop disease datasets,Listed important dataset features and sample sources  
+* **[Ramitha Chowdhary]:** Created and tested `/register` endpoint,Integrated database connection and verified API responses.
+```
+### 🗓 Day 02 (2025-10-21)
+## Key Accomplishments:
+```
+- Initialized **crop diagnosis model structure** in `diagnosis_ml.py`.  
+- Updated `main.py` and initialized **frontend structure**.
+- Trained preliminary model on sample dataset.
+```
+## Goals for Next Day:
+```
+- Develop a fully functional crop disease classifier model.
+- Build and integrate API endpoints for other features such as Help,Schemes,Market and other relevant modules.
+```
+#### 👥 **Team Contributions**
+```
+* **[Ramitha Chowdhary]:** Backend route and frontend setup.   
+* **[A. Nabithra]:**  ML model training and dataset preparation.
+```
+Here’s a **progress journal entry for Week 03, Days 01 and 02** reflecting your major backend work and ongoing updates—styled to match previous entries and based on your commit activity:
+
+***
+
+## 📅 Week 03
+
+### 🗓 Day 01 (2025-10-20)
+#### Key Accomplishments:
+```
+- Completed major upload and integration of the backend codebase for **Kisan+ - Your Farming Assistant**.
+- Merged all backend modules—user authentication, crop diagnosis API, and database models—into the main branch.
+- Added `.gitignore` for improved repository hygiene (excluded `.env`, `venv`, logs, and cache).
+- Finished backend restructuring: optimized import patterns and reorganized project folders for clarity and scalability.
+```
+#### Goals for Next Day:
+```
+- Review and test all backend routes after major merge.
+- Update API documentation to reflect latest endpoints and integrations.
+- Collaborate with frontend and ML teams to finalize model deployment strategy.
+```
+#### 👥 Team Contributions
+```
+* **[Ramitha Chowdhary]:** Led complete backend upload, merge to main, and restructuring effort; added `.gitignore` for repo hygiene.
+* **[A. Nabithra]:** Provided feedback on backend structure, verified ML/DB integration points.
+```
+
+***
+
+### 🗓 Day 02 (2025-10-21)
+#### Key Accomplishments:
+```
+- Successfully tested backend endpoints after merge to main.
+- Verified user authentication, crop disease prediction, and DB connectivity.
+- Began updating requirements and preparing deployment setups.
+- Documented backend changes in project wiki; planned further improvements and feature rollouts.
+```
+#### Goals for Next Day:
+```
+- Update and refine backend requirements (`requirements.txt`).
+- Continue integration with ML model and frontend.
+- Start preparing production deployment pipeline (to be updated soon).
+```
+#### 👥 Team Contributions
+```
+* **[Ramitha Chowdhary]:** Orchestrated backend testing and documentation; organized requirements updates.
+* **[A. Nabithra]:** Supported verification and coordinated with ML/DB integration.
+```

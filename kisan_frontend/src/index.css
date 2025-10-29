@@ -1,68 +1,238 @@
-:root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
-
-body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
-}
-
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
-
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
-
-@media (prefers-color-scheme: light) {
+@layer base {
   :root {
-    color: #213547;
-    background-color: #ffffff;
+    /* Kisan+ Agricultural Design System */
+    --background: 30 18% 96%; /* #F6EFE6 sand */
+    --foreground: 180 13% 21%; /* #2F3A3A dark gray */
+
+    --card: 0 0% 100%;
+    --card-foreground: 180 13% 21%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 180 13% 21%;
+
+    --primary: 158 79% 26%; /* #0F7A4A green */
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 156 59% 45%; /* #30B67A light green */
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 30 18% 90%;
+    --muted-foreground: 180 13% 45%;
+
+    --accent: 156 59% 45%; /* #30B67A */
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --success: 149 68% 45%; /* #2DBB6E */
+    --success-foreground: 0 0% 100%;
+
+    --warning: 45 92% 63%; /* #F2C94C */
+    --warning-foreground: 180 13% 21%;
+
+    --brown: 30 39% 35%; /* #7A5A35 */
+    --brown-foreground: 0 0% 100%;
+
+    --border: 30 18% 85%;
+    --input: 30 18% 85%;
+    --ring: 158 79% 26%;
+
+    --radius: 1rem;
+
+    --sidebar-background: 0 0% 98%;
+
+    --sidebar-foreground: 240 5.3% 26.1%;
+
+    --sidebar-primary: 240 5.9% 10%;
+
+    --sidebar-primary-foreground: 0 0% 98%;
+
+    --sidebar-accent: 240 4.8% 95.9%;
+
+    --sidebar-accent-foreground: 240 5.9% 10%;
+
+    --sidebar-border: 220 13% 91%;
+
+    --sidebar-ring: 217.2 91.2% 59.8%;
   }
-  a:hover {
-    color: #747bff;
+
+  .dark {
+    --background: 180 13% 15%;
+    --foreground: 30 18% 96%;
+
+    --card: 180 13% 18%;
+    --card-foreground: 30 18% 96%;
+
+    --popover: 180 13% 18%;
+    --popover-foreground: 30 18% 96%;
+
+    --primary: 158 79% 35%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 156 59% 35%;
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 180 13% 25%;
+    --muted-foreground: 30 18% 70%;
+
+    --accent: 156 59% 35%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84% 50%;
+    --destructive-foreground: 0 0% 100%;
+
+    --success: 149 68% 35%;
+    --success-foreground: 0 0% 100%;
+
+    --warning: 45 92% 53%;
+    --warning-foreground: 180 13% 15%;
+
+    --brown: 30 39% 45%;
+    --brown-foreground: 0 0% 100%;
+
+    --border: 180 13% 25%;
+    --input: 180 13% 25%;
+    --ring: 158 79% 35%;
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
   }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+  }
+
   button {
-    background-color: #f9f9f9;
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  /* Touch-friendly mobile targets */
+  .touch-target {
+    @apply min-h-[48px] min-w-[48px];
+  }
+
+  /* Pulse animation for mic */
+  @keyframes pulse-ring {
+    0% {
+      transform: scale(0.95);
+      opacity: 1;
+    }
+    50% {
+      transform: scale(1.05);
+      opacity: 0.5;
+    }
+    100% {
+      transform: scale(0.95);
+      opacity: 1;
+    }
+  }
+
+  .animate-pulse-ring {
+    animation: pulse-ring 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  /* Leaf scan animation */
+  @keyframes scan {
+    0%, 100% {
+      transform: translateY(0);
+      opacity: 0;
+    }
+    50% {
+      opacity: 1;
+    }
+  }
+
+  .animate-scan {
+    animation: scan 2s ease-in-out infinite;
+  }
+
+  /* Gradient animation for hero */
+  @keyframes gradient-shift {
+    0%, 100% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+  }
+
+  .animate-gradient {
+    background-size: 200% 200%;
+    animation: gradient-shift 8s ease infinite;
+  }
+
+  /* Glow effect */
+  .glow {
+    box-shadow: 0 0 20px hsl(var(--primary) / 0.5);
+  }
+
+  /* Premium hover effects */
+  .hover-scale-102 {
+    @apply transition-transform duration-200 hover:scale-[1.02];
+  }
+
+  /* Card gradient overlay */
+  .card-gradient {
+    background: linear-gradient(135deg, hsl(var(--card)) 0%, hsl(var(--muted)) 100%);
+  }
+
+  /* Subtle depth shadow */
+  .shadow-premium {
+    box-shadow: 
+      0 2px 8px hsl(var(--foreground) / 0.04),
+      0 4px 16px hsl(var(--foreground) / 0.06);
+  }
+}
+
+@layer components {
+  /* Enhanced card hover states */
+  .card {
+    @apply transition-all duration-300 hover:scale-[1.01];
+  }
+
+  .card:hover {
+    @apply shadow-premium;
+  }
+
+  /* Button hover enhancements */
+  .button {
+    @apply transition-all duration-300 hover:shadow-md;
+  }
+
+  /* Premium card gradient */
+  .card-premium {
+    background: linear-gradient(135deg, hsl(var(--card)) 0%, hsl(var(--primary) / 0.03) 100%);
+  }
+
+  /* Navbar active gradient */
+  .nav-active {
+    background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--primary) / 0.85) 100%);
+    box-shadow: 0 4px 12px hsl(var(--primary) / 0.25);
   }
 }
