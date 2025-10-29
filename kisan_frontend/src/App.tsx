@@ -1,35 +1,135 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { Toaster } from "@/components/ui/toaster";
+import { Toaster as Sonner } from "@/components/ui/sonner";
+import { TooltipProvider } from "@/components/ui/tooltip";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { BrowserRouter, Routes, Route, Navigate, Outlet, useNavigate, useLocation } from "react-router-dom";
+import { getProfile } from "@/lib/storage";
+import { useState } from "react";
+import { FloatingMic } from "./components/FloatingMic";
+import { ChatPopup } from "./components/ChatPopup";
+import { TopNavbar } from "./components/TopNavbar";
+import { BottomNavbar } from "./components/BottomNavbar";
+import Landing from "./pages/Landing";
+import Login from "./pages/Login";
+import Onboarding from "./pages/Onboarding";
+import Dashboard from "./pages/Dashboard";
+import Diagnosis from "./pages/Diagnosis";
+import Market from "./pages/Market";
+import Schemes from "./pages/Schemes";
+import HelpAndHistory from "./pages/HelpAndHistory";
+import Profile from "./pages/Profile";
+import NotFound from "./pages/NotFound";
+import { Navbar } from "./components/Navbar";
 
-function App() {
-  const [count, setCount] = useState(0)
+const queryClient = new QueryClient();
+
+const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
+  const profile = getProfile();
+  if (!profile) {
+    return <Navigate to="/" replace />;
+  }
+  return <>{children}</>;
+};
+
+const ProtectedLayout = () => {
+  const [isChatOpen, setIsChatOpen] = useState(false);
+  const navigate = useNavigate();
+
+  const handleImageUpload = (file: File) => {
+    navigate('/diagnosis', { state: { file } });
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className="flex flex-col min-h-screen w-full">
+      <TopNavbar />
+      <div className="flex flex-1 w-full">
+        <Navbar />
+        <main className="flex-1 relative pb-20 lg:pb-0">
+          <Outlet />
+          
+          {/* Floating mic for desktop - bottom right */}
+          <div className="hidden lg:block">
+            <FloatingMic 
+              onClick={() => setIsChatOpen(true)}
+              hasMessages={false}
+            />
+          </div>
+          
+          <ChatPopup
+            isOpen={isChatOpen}
+            onClose={() => setIsChatOpen(false)}
+            onImageUpload={handleImageUpload}
+          />
+        </main>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
 
-export default App
+      {/* Bottom navbar for mobile/tablet with mic in center */}
+      <BottomNavbar onMicClick={() => setIsChatOpen(true)} />
+    </div>
+  );
+};
+
+const PublicLayout = () => {
+  const [isChatOpen, setIsChatOpen] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const handleImageUpload = (file: File) => {
+    navigate('/diagnosis', { state: { file } });
+  };
+
+  return (
+    <div className="flex flex-col min-h-screen w-full">
+      <TopNavbar />
+      <main className="flex-1 relative">
+        <Outlet />
+        
+        {/* Floating mic for public pages - bottom right on all screens */}
+        <FloatingMic 
+          onClick={() => setIsChatOpen(true)}
+          hasMessages={false}
+        />
+        
+        <ChatPopup
+          isOpen={isChatOpen}
+          onClose={() => setIsChatOpen(false)}
+          onImageUpload={handleImageUpload}
+        />
+      </main>
+    </div>
+  );
+};
+
+const App = () => (
+  <QueryClientProvider client={queryClient}>
+    <TooltipProvider>
+      <Toaster />
+      <Sonner />
+      <BrowserRouter>
+        <Routes>
+          {/* Public routes with TopNavbar and floating mic */}
+          <Route element={<PublicLayout />}>
+            <Route path="/" element={<Landing />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/onboarding" element={<Onboarding />} />
+          </Route>
+          
+          {/* Protected routes with TopNavbar, Sidebar (desktop), and BottomNavbar (mobile) */}
+          <Route element={<ProtectedRoute><ProtectedLayout /></ProtectedRoute>}>
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/diagnosis" element={<Diagnosis />} />
+            <Route path="/market" element={<Market />} />
+            <Route path="/schemes" element={<Schemes />} />
+            <Route path="/help" element={<HelpAndHistory />} />
+            <Route path="/history" element={<HelpAndHistory />} />
+            <Route path="/profile" element={<Profile />} />
+          </Route>
+          
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </BrowserRouter>
+    </TooltipProvider>
+  </QueryClientProvider>
+);
+
+export default App;
