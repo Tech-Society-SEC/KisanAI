@@ -1,10 +1,10 @@
  
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-from models.database import SessionLocal
-from models.models import CropDiagnosis, User
-from schemas.diagnosis_schema import DiagnosisRequest
-from models.diagnosis_ml import classify_disease
+from app.models.database import SessionLocal
+from app.models.models import CropDiagnosis, User
+from app.schemas.diagnosis_schema import DiagnosisRequest
+from app.models.diagnosis_ml import classify_disease
 from fastapi import UploadFile, File, Form
 import datetime
 import random
