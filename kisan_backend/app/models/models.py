@@ -1,32 +1,34 @@
- 
 from sqlalchemy import Column, Integer, String, Float, ForeignKey, DateTime, Boolean, Text
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
+from sqlalchemy.sql import func
 import datetime
 
 Base = declarative_base()
-
 class User(Base):
     __tablename__ = 'users'
     id = Column(Integer, primary_key=True, index=True)
-    name = Column(String, nullable=False)
-    phone = Column(String, unique=True, nullable=False)
+    firebase_uid = Column(String, unique=True, index=True, nullable=True)
+    name = Column(String, nullable=True)
+    phone = Column(String, unique=True, nullable=True)
     state = Column(String)
     district = Column(String)
     village = Column(String)
     land_size = Column(Float)
     crops = Column(String)
     language = Column(String)
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
 
 class CropDiagnosis(Base):
     __tablename__ = 'crop_diagnosis'
     id = Column(Integer, primary_key=True, index=True)
     user_id = Column(Integer, ForeignKey('users.id'))
     crop = Column(String)
-    photo = Column(String)  # path to uploaded image
-    result = Column(String)
+    photo = Column(String)
+    result = Column(Text)
     timestamp = Column(DateTime, default=datetime.datetime.utcnow)
     user = relationship('User')
+
 
 class MarketPrice(Base):
     __tablename__ = 'market_prices'
@@ -35,6 +37,7 @@ class MarketPrice(Base):
     mandi = Column(String)
     price = Column(Float)
     trend = Column(String)
+
 
 class Scheme(Base):
     __tablename__ = 'schemes'
@@ -45,6 +48,7 @@ class Scheme(Base):
     benefits = Column(String)
     deadline = Column(DateTime)
 
+
 class SchemeApplication(Base):
     __tablename__ = 'scheme_applications'
     id = Column(Integer, primary_key=True, index=True)
@@ -53,6 +57,7 @@ class SchemeApplication(Base):
     status = Column(String)
     user = relationship('User')
     scheme = relationship('Scheme')
+
 
 class Notification(Base):
     __tablename__ = 'notifications'
@@ -63,6 +68,7 @@ class Notification(Base):
     read_flag = Column(Boolean, default=False)
     user = relationship('User')
 
+
 class HelpHistory(Base):
     __tablename__ = 'help_history'
     id = Column(Integer, primary_key=True, index=True)
@@ -71,3 +77,14 @@ class HelpHistory(Base):
     result = Column(Text)
     timestamp = Column(DateTime, default=datetime.datetime.utcnow)
     user = relationship('User')
+
+
+class RefreshToken(Base):
+    __tablename__ = "refresh_tokens"
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"))
+    token_hash = Column(Text, nullable=False)
+    revoked = Column(Boolean, default=False)
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
+    expires_at = Column(DateTime(timezone=True))
+    user = relationship("User")
