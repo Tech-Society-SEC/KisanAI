@@ -5,16 +5,10 @@ from sqlalchemy.sql import func
 import datetime
 
 Base = declarative_base()
-
 class User(Base):
     __tablename__ = 'users'
-
     id = Column(Integer, primary_key=True, index=True)
-
-    # Firebase UID for phone authentication
     firebase_uid = Column(String, unique=True, index=True, nullable=True)
-
-    # Profile fields
     name = Column(String, nullable=True)
     phone = Column(String, unique=True, nullable=True)
     state = Column(String)
@@ -23,9 +17,7 @@ class User(Base):
     land_size = Column(Float)
     crops = Column(String)
     language = Column(String)
-
     created_at = Column(DateTime(timezone=True), server_default=func.now())
-
 
 class CropDiagnosis(Base):
     __tablename__ = 'crop_diagnosis'
@@ -89,7 +81,6 @@ class HelpHistory(Base):
 
 class RefreshToken(Base):
     __tablename__ = "refresh_tokens"
-
     id = Column(Integer, primary_key=True, index=True)
     user_id = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"))
     token_hash = Column(Text, nullable=False)

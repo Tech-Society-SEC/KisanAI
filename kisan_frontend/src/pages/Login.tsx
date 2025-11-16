@@ -1,100 +1,105 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Card } from '@/components/ui/card';
-import { ArrowLeft, LogIn } from 'lucide-react';
-import { useToast } from '@/hooks/use-toast';
-import { getProfile } from '@/lib/storage';
-import { FloatingMic } from '@/components/FloatingMic';
-import { ChatPopup } from '@/components/ChatPopup';
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
+
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Card } from "@/components/ui/card";
+
+import { ArrowLeft, LogIn } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
+
+import { FloatingMic } from "@/components/FloatingMic";
+import { ChatPopup } from "@/components/ChatPopup";
+
+import { auth, initRecaptcha, sendOtpPhone } from "@/lib/firebase";
+import api from "@/lib/api";
+import { saveTokens } from "@/lib/storage";
 
 export default function Login() {
   const navigate = useNavigate();
   const { toast } = useToast();
-  const [mobile, setMobile] = useState('');
-  const [otp, setOtp] = useState('');
+
+  const [mobile, setMobile] = useState("");
+  const [otp, setOtp] = useState("");
   const [otpSent, setOtpSent] = useState(false);
   const [isChatOpen, setIsChatOpen] = useState(false);
 
-  const handleSendOtp = () => {
-    if (!mobile) {
-      toast({ title: "Please enter mobile number", variant: "destructive" });
+  // --------------------------
+  // SEND OTP
+  // --------------------------
+  const handleSendOtp = async () => {
+    if (mobile.length !== 10) {
+      toast({
+        title: "Enter valid 10-digit mobile number",
+        variant: "destructive",
+      });
       return;
     }
-    
-    // Mock OTP sending
-    toast({ 
-      title: "OTP Sent!", 
-      description: "Demo OTP: 111111",
-    });
-    setOtpSent(true);
+
+    try {
+      const verifier = initRecaptcha(); // MUST exist before calling
+
+      const confirmation = await sendOtpPhone("+91" + mobile, verifier);
+      window.confirmationResult = confirmation;
+
+      setOtpSent(true);
+      toast({ title: "OTP Sent!", description: "Check your SMS" });
+    } catch (err) {
+      console.error("OTP SEND ERROR:", err);
+      toast({ title: "Failed to send OTP", variant: "destructive" });
+    }
   };
 
-  const handleLogin = () => {
+  // --------------------------
+  // VERIFY OTP & LOGIN BACKEND
+  // --------------------------
+  const handleLogin = async () => {
     if (!otp) {
-      toast({ title: "Please enter OTP", variant: "destructive" });
+      toast({ title: "Enter OTP", variant: "destructive" });
       return;
     }
 
-    // Mock OTP validation
-    if (otp !== '111111') {
-      toast({ 
-        title: "Invalid OTP", 
-        description: "Demo OTP is: 111111",
-        variant: "destructive" 
-      });
-      return;
-    }
+    try {
+      const result = await window.confirmationResult.confirm(otp);
+      const idToken = await result.user.getIdToken(true);
 
-    // Check if user has completed onboarding
-    const profile = getProfile();
-    
-    if (!profile || !profile.name || !profile.state) {
-      toast({ 
-        title: "Profile Incomplete", 
-        description: "Please complete your profile setup",
-      });
-      navigate('/onboarding');
-      return;
-    }
+      const res = await api.post(
+        "/auth/login",
+        {},
+        {
+          headers: { Authorization: `Bearer ${idToken}` },
+        }
+      );
 
-    toast({ title: "Login successful!", description: `Welcome back, ${profile.name}!` });
-    navigate('/dashboard');
+      saveTokens(res.data.access_token, res.data.refresh_token);
+
+      toast({ title: "Login Successful!" });
+
+      if (res.data.profile_complete === false) {
+        navigate("/onboarding");
+      } else {
+        navigate("/dashboard");
+      }
+    } catch (err) {
+      console.error("OTP VERIFY ERROR:", err);
+      toast({ title: "Invalid OTP", variant: "destructive" });
+    }
   };
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-background via-background to-primary/5 flex items-center justify-center p-4 relative">
-      <FloatingMic 
-        onClick={() => setIsChatOpen(true)}
-        hasMessages={false}
-      />
       
+
+
+      <FloatingMic onClick={() => setIsChatOpen(true)} hasMessages={false} />
+
       <ChatPopup
         isOpen={isChatOpen}
         onClose={() => setIsChatOpen(false)}
         onImageUpload={() => {}}
       />
-
-      {/* Animated background elements */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <motion.div
-          animate={{ y: [0, -20, 0], opacity: [0.3, 0.5, 0.3] }}
-          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute top-20 left-10 text-6xl opacity-30"
-        >
-          🌾
-        </motion.div>
-        <motion.div
-          animate={{ y: [0, 20, 0], opacity: [0.3, 0.5, 0.3] }}
-          transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-          className="absolute top-40 right-20 text-5xl opacity-30"
-        >
-          🌻
-        </motion.div>
-      </div>
 
       <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
@@ -103,106 +108,79 @@ export default function Login() {
       >
         <Button
           variant="ghost"
-          onClick={() => navigate('/landing')}
+          onClick={() => navigate("/landing")}
           className="mb-4 hover:bg-primary/10"
         >
-          <ArrowLeft className="h-4 w-4 mr-2" />
-          Back to Home
+          <ArrowLeft className="h-4 w-4 mr-2" /> Back to Home
         </Button>
 
-        <Card className="p-8 space-y-6 shadow-2xl border-2 hover:border-primary/20 transition-all bg-gradient-to-br from-card via-card to-primary/5">
-          {/* Logo */}
+        <Card className="p-8 space-y-6 shadow-2xl border-2 hover:border-primary/20">
+
           <div className="text-center space-y-2">
             <motion.div
               animate={{ rotate: [0, 5, -5, 0] }}
-              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+              transition={{ duration: 3, repeat: Infinity }}
               className="text-5xl mb-4"
             >
               🌾
             </motion.div>
+
             <h1 className="text-3xl font-bold text-primary">Welcome Back</h1>
             <p className="text-muted-foreground">Login to continue to Kisan+</p>
           </div>
 
           {!otpSent ? (
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="space-y-4"
-            >
-              <div className="space-y-2">
-                <Label htmlFor="mobile">Mobile Number</Label>
-                <Input
-                  id="mobile"
-                  type="tel"
-                  value={mobile}
-                  onChange={(e) => setMobile(e.target.value)}
-                  placeholder="Enter your mobile number"
-                  className="text-lg py-6"
-                />
-              </div>
+            <div className="space-y-4">
+              <Label>Mobile Number</Label>
+              <Input
+                value={mobile}
+                onChange={(e) => setMobile(e.target.value)}
+                maxLength={10}
+                placeholder="10 digit mobile"
+                className="text-lg py-6"
+              />
 
-              <Button 
-                onClick={handleSendOtp} 
-                className="w-full py-6 text-lg shadow-lg hover:shadow-xl transition-all hover:scale-102"
+              <Button
+                onClick={handleSendOtp}
+                className="w-full py-6 text-lg"
               >
                 Send OTP
               </Button>
-
-              <p className="text-xs text-center text-muted-foreground">
-                Demo: Any mobile number works. OTP is always 111111
-              </p>
-            </motion.div>
+            </div>
           ) : (
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="space-y-4"
-            >
-              <div className="space-y-2">
-                <Label htmlFor="otp">Enter OTP</Label>
-                <Input
-                  id="otp"
-                  type="text"
-                  value={otp}
-                  onChange={(e) => setOtp(e.target.value)}
-                  placeholder="Enter 6-digit OTP"
-                  maxLength={6}
-                  className="text-lg py-6 text-center tracking-widest"
-                />
-                <p className="text-xs text-muted-foreground text-center">
-                  OTP sent to {mobile}
-                </p>
-              </div>
+            <div className="space-y-4">
+              <Label>Enter OTP</Label>
+              <Input
+                value={otp}
+                onChange={(e) => setOtp(e.target.value)}
+                maxLength={6}
+                placeholder="6-digit OTP"
+                className="text-lg py-6 text-center tracking-widest"
+              />
 
-              <div className="space-y-2">
-                <Button 
-                  onClick={handleLogin} 
-                  className="w-full py-6 text-lg shadow-lg hover:shadow-xl transition-all hover:scale-102"
-                >
-                  <LogIn className="h-5 w-5 mr-2" />
-                  Login
-                </Button>
+              <Button
+                onClick={handleLogin}
+                className="w-full py-6 text-lg"
+              >
+                <LogIn className="h-5 w-5 mr-2" /> Login
+              </Button>
 
-                <Button
-                  variant="ghost"
-                  onClick={() => {
-                    setOtpSent(false);
-                    setOtp('');
-                  }}
-                  className="w-full hover:bg-muted"
-                >
-                  Change Mobile Number
-                </Button>
-              </div>
-
-              <p className="text-xs text-center text-muted-foreground">
-                Demo OTP: 111111
-              </p>
-            </motion.div>
+              <Button
+                variant="ghost"
+                onClick={() => { setOtpSent(false); setOtp(""); }}
+                className="w-full hover:bg-muted"
+              >
+                Change Mobile Number
+              </Button>
+              {/* ALWAYS PRESENT — REQUIRED FOR OTP
+              // <div id="recaptcha-container"></div> */}
+            </div>
           )}
+
         </Card>
       </motion.div>
+      {/* ALWAYS PRESENT — REQUIRED FOR OTP */}
+      <div id="recaptcha-container"></div>
     </div>
   );
 }
