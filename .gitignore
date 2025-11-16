@@ -9,7 +9,8 @@ venv/
 
 # Environment variables
 .env
-
+kisan_backend/.env
+kisan_backend/firebase_admin.json
 # Miscellaneous
 *.log
 *.sqlite3

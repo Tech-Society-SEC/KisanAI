@@ -1,12 +1,11 @@
- 
 from pydantic import BaseModel
+from typing import Optional
 
-class UserCreate(BaseModel):
-    name: str
-    phone: str
-    state: str
-    district: str
-    village: str
-    land_size: float
-    crops: str
-    language: str
+class UserProfileUpdate(BaseModel):
+    name: Optional[str] = None
+    state: Optional[str] = None
+    district: Optional[str] = None
+    village: Optional[str] = None
+    land_size: Optional[float] = None
+    crops: Optional[str] = None
+    language: Optional[str] = None
