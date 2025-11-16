@@ -15,3 +15,16 @@ venv/
 *.sqlite3
 .DS_Store
 .idea/
+
+# Kisan Backend specific ignores
+kisan_backend/__pycache__/
+kisan_backend/migrations/__pycache__/
+kisan_backend/migrations/*.pyc
+kisan_backend/migrations/*.pyo
+kisan_backend/db.sqlite3
+kisan_backend/.vscode/
+kisan_backend/venv/
+kisan_backend/*.log
+kisan_backend/*.sqlite3
+kisan_backend/.env
+kisan_backend/firebase_admin.json
