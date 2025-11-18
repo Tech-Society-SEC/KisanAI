@@ -29,3 +29,6 @@ kisan_backend/*.log
 kisan_backend/*.sqlite3
 kisan_backend/.env
 kisan_backend/firebase_admin.json
+
+Model/Dataset
+Model/Dataset/*
